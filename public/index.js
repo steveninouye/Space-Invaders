@@ -32,6 +32,55 @@ function InputHandler() {
   });
 }
 
-InputHandler.prototype.isDown = function(code) {};
+InputHandler.prototype.isDown = function(code) {
+  return this.down[code];
+};
 
-InputHandler.prototype.isPressed = function(code) {};
+InputHandler.prototype.isPressed = function(code) {
+  if (this.pressed[code]) {
+    return false;
+  } else if (this.down[code]) {
+    return (this.pressed[code] = true);
+  }
+  return false;
+};
+
+///////////////////////////
+
+let screen,
+  input,
+  frames,
+  alSprite,
+  taSprite,
+  ciSprite,
+  aliens,
+  dir,
+  tank,
+  bullets,
+  cities;
+
+const main = () => {
+  screen = new Screen(510, 600);
+  input = new InputHandler();
+  let img = new Image();
+  img.addEventListener('load', function() {
+    alSprite = [
+      [new Sprite(this, 0, 0, 22, 16), new Sprite(this, 0, 16, 22, 16)],
+      [new Sprite(this, 22, 0, 16, 16), new Sprite(this, 22, 16, 16, 16)],
+      [new Sprite(this, 38, 0, 24, 16), new Sprite(this, 38, 16, 24, 16)]
+    ];
+    taSprite = new Sprite(this);
+    ciSprite = new Sprite(this);
+    init();
+    run();
+  });
+  img.src = 'img/sprites.png';
+};
+
+const init = () => {};
+
+const run = () => {};
+
+const update = () => {};
+
+const render = () => {};
