@@ -6,6 +6,10 @@ function Screen(width, height) {
   document.body.appendChild(this.canvas);
 }
 
+Screen.prototype.clear = function(){
+  this.ctx.clearRect(0,0, this.width, this.height);
+}
+
 Screen.prototype.drawSprite = function(sp, x, y) {
   this.ctx.drawImage(sp.img, sp.x, sp.y, sp.w, sp.h, x, y, sp.w, sp.h);
 };
@@ -90,6 +94,9 @@ function main() {
 
 function init() {
   frames = 0;
+  spFrame = 0;
+  lvFrame = 60;
+  dir = 1;
 
   aliens = [];
   let rows = [1, 0, 0, 2, 2];
@@ -117,17 +124,52 @@ function run() {
   window.requestAnimationFrame(loop, screen.canvas);
 }
 
-function update() {}
+function update() {
+  frames++;
+  if (frames % lvFrame === 0) {
+    spFrame = (spFrame + 1) % 2;
+    let len = aliens.length;
+    for (let i = 0; i < len; i++) {
+      let a = aliens[i];
+      a.x += 30 * dir;
+    }
+  }
+}
 
 function render() {
+  
   let len = aliens.length;
   for (let i = 0; i < len; i++) {
     let a = aliens[i];
-    screen.drawSprite(a.sprite[0], a.x, a.y);
+    screen.drawSprite(a.sprite[spFrame], a.x, a.y);
   }
 }
 
 main();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///////////////////
 
 /**
  * Check if to axis aligned bounding boxes intersects
