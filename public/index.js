@@ -7,7 +7,9 @@ function Bullet(x, y, velocityY, w, h, color) {
   this.color = color;
 }
 
-
+Bullet.prototype.update = function(){
+  this.y += this.velocityY;
+}
 
 function Screen(width, height) {
   this.canvas = document.createElement('canvas');
