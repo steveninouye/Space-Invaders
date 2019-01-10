@@ -166,6 +166,12 @@ function init() {
     },
     hits: function(x, y) {
       y -= this.y;
+      let data = this.ctx.getImageData(x, y, 1, 1);
+      if (data.data[3] !== 0) {
+        this.generateDamage(x, y);
+        return true;
+      }
+      return false;
     }
   };
 
@@ -221,8 +227,17 @@ function update() {
 
     if (b.y + b.height < 10 || b.y > screen.height) {
       bullets.splice(i, 1);
-      i--;
+      // i--;
       continue;
+    }
+
+    let h2 = b.height * 0.5;
+    if (cities.y < b.y + h2 && b.y + h2 < cities.y + cities.h) {
+      if (cities.hits(b.x, b.y + h2)) {
+        bullets.splice(i, 1);
+        // i--;
+        continue;
+      }
     }
 
     for (let j = 0; j < aliens.length; j++) {
