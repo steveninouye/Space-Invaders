@@ -98,6 +98,12 @@ function init() {
   lvFrame = 40;
   dir = 1;
 
+  tank = {
+    sprite: taSprite,
+    x: (screen.width - taSprite.w) / 2,
+    y: screen.height - (30, +taSprite.h)
+  };
+
   aliens = [];
   let rows = [1, 0, 0, 2, 2];
   let len = rows.length;
@@ -125,11 +131,19 @@ function run() {
 }
 
 function update() {
+  if (input.isDown(37)) {
+    tank.x -= 4;
+  }
+
+  if (input.isDown(39)) {
+    tank.x += 4;
+  }
+
   frames++;
   if (frames % lvFrame === 0) {
     spFrame = (spFrame + 1) % 2;
 
-    let _max = 0
+    let _max = 0;
     let _min = screen.width;
 
     let len = aliens.length;
@@ -140,12 +154,12 @@ function update() {
       _max = Math.max(_max, a.x + a.w);
       _min = Math.min(_min, a.x);
     }
-    if (_max > screen.width || _min < 30){
+    if (_max > screen.width || _min < 30) {
       dir *= -1;
       len = aliens.length;
-      for(let i = 0; i < len; i++){
+      for (let i = 0; i < len; i++) {
         aliens[i].x += 30 * dir;
-        aliens[i].y += 30; 
+        aliens[i].y += 30;
       }
     }
   }
@@ -158,6 +172,7 @@ function render() {
     let a = aliens[i];
     screen.drawSprite(a.sprite[spFrame], a.x, a.y);
   }
+  screen.drawSprite(tank.sprite, tank.x, tank.y);
 }
 
 main();
