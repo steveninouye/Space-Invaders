@@ -1,4 +1,6 @@
+![Space Invaders Logo](img/space_invaders.jpg)
 # Space Invaders
+
 
 Space Invaders is inspired by the 1978 game made by Tomohiro Nishikado ([Space Invaders](https://en.wikipedia.org/wiki/Space_Invaders)).  The User's ship will be located at the bottom of the screen and be able to move horizontally and shoot at enemies that appear from above.  Each time a player shoots down an enemy ship the user will receive points and the game ends when the player is either touched by an enemy ship.
 
@@ -10,6 +12,7 @@ Space Invaders is inspired by the 1978 game made by Tomohiro Nishikado ([Space I
 - Enemies move faster toward the player at each level
 - Player can earn power ups (Bonus)
 
+![Game Play](img/game_play.png)
 ## Architecture and Technologies
 - HTML Canvas
   - Allows for rendering 2D shapes onto the browser window
