@@ -1,3 +1,7 @@
+function AABBIntersect(ax, ay, aw, ah, bx, by, bw, bh) {
+  return ax < bx + bw && bx < ax + aw && ay < by + bh && by < ay + ah;
+}
+
 function Bullet(x, y, velocityY, w, h, color) {
   this.x = x;
   this.y = y;
@@ -176,6 +180,19 @@ function update() {
       bullets.splice(i, 1);
       i--;
       continue;
+    }
+  }
+
+  if (Math.random() < 0.03 && aliens.length > 0) {
+    let a = aliens[Math.round(Math.random() * (aliens.length - 1))];
+
+    for (let i = 0; i < aliens.length; i++) {
+      let b = aliens[i];
+
+      if (AABBIntersect(a.x, a.y, a.w, a.h, b.x, b.y, b.w, b.h)) {
+        a = b;
+      }
+      bullets.push(new Bullet(a.x + a.w * 0.5, a.y + a.h, 4, 2, 4, '#FFF'));
     }
   }
 
