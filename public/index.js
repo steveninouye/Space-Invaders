@@ -3,7 +3,6 @@ function Screen(width, height) {
   this.canvas.width = this.width = width;
   this.canvas.height = this.height = height;
   this.ctx = this.canvas.getContext('2d');
-
   document.body.appendChild(this.canvas);
 }
 
@@ -19,10 +18,10 @@ function Sprite(img, x, y, w, h) {
   this.h = h;
 }
 
-function InputHandler() {
+function InputHandeler() {
   this.down = {};
   this.pressed = {};
-  let _this = this;
+  var _this = this;
   document.addEventListener('keydown', function(evt) {
     _this.down[evt.keyCode] = true;
   });
@@ -32,11 +31,11 @@ function InputHandler() {
   });
 }
 
-InputHandler.prototype.isDown = function(code) {
+InputHandeler.prototype.isDown = function(code) {
   return this.down[code];
 };
 
-InputHandler.prototype.isPressed = function(code) {
+InputHandeler.prototype.isPressed = function(code) {
   if (this.pressed[code]) {
     return false;
   } else if (this.down[code]) {
@@ -45,11 +44,22 @@ InputHandler.prototype.isPressed = function(code) {
   return false;
 };
 
-///////////////////////////
+// InputHandler.prototype.isPressed = function(code) {
+//   if (this.pressed[code]) {
+//     return false;
+//   } else if (this.down[code]) {
+//     return (this.pressed[code] = true);
+//   }
+//   return false;
+// };
 
-let screen,
+// ///////////////////////////
+
+let display,
   input,
   frames,
+  spFrame,
+  lvFrame,
   alSprite,
   taSprite,
   ciSprite,
@@ -59,28 +69,115 @@ let screen,
   bullets,
   cities;
 
-const main = () => {
-  screen = new Screen(510, 600);
-  input = new InputHandler();
-  let img = new Image();
+function main() {
+  screen = new Screen(504, 600);
+  input = new InputHandeler();
+  var img = new Image();
   img.addEventListener('load', function() {
     alSprite = [
       [new Sprite(this, 0, 0, 22, 16), new Sprite(this, 0, 16, 22, 16)],
       [new Sprite(this, 22, 0, 16, 16), new Sprite(this, 22, 16, 16, 16)],
       [new Sprite(this, 38, 0, 24, 16), new Sprite(this, 38, 16, 24, 16)]
     ];
-    taSprite = new Sprite(this);
-    ciSprite = new Sprite(this);
+    taSprite = new Sprite(this, 62, 0, 22, 16);
+    ciSprite = new Sprite(this, 84, 8, 36, 24);
+    // initate and run the game
     init();
     run();
   });
   img.src = 'img/sprites.png';
-};
+}
 
-const init = () => {};
+function init() {
+  frames = 0;
 
-const run = () => {};
+  aliens = [];
+  let rows = [1, 0, 0, 2, 2];
+  let len = rows.length;
+  for (let i = 0; i < len; i++) {
+    for (let j = 0; j < 10; j++) {
+      let a = rows[i];
+      aliens.push({
+        sprite: alSprite[a],
+        x: 30 + j * 30 + [0, 4, 0][a],
+        y: 30 + i * 30,
+        w: alSprite[a][0].w,
+        h: alSprite[a][0].h
+      });
+    }
+  }
+}
 
-const update = () => {};
+function run() {
+  var loop = function() {
+    update();
+    render();
+    window.requestAnimationFrame(loop, screen.canvas);
+  };
+  window.requestAnimationFrame(loop, screen.canvas);
+}
 
-const render = () => {};
+function update() {}
+
+function render() {
+  let len = aliens.length;
+  for (let i = 0; i < len; i++) {
+    let a = aliens[i];
+    screen.drawSprite(a.sprite[0], a.x, a.y);
+  }
+}
+
+main();
+
+/**
+ * Check if to axis aligned bounding boxes intersects
+ *
+ * @return {bool}  the check result
+ */
+// function AABBIntersect(ax, ay, aw, ah, bx, by, bw, bh) {
+//   return ax < bx + bw && bx < ax + aw && ay < by + bh && by < ay + ah;
+// }
+
+// function Bullet(x, y, vely, w, h, color) {
+//   this.x = x;
+//   this.y = y;
+//   this.vely = vely;
+//   this.width = w;
+//   this.height = h;
+//   this.color = color;
+// }
+
+// /**
+//  * Update bullet position
+//  */
+// Bullet.prototype.update = function() {
+//   this.y += this.vely;
+// };
+
+// /**
+//  * Abstracted canvas class usefull in games
+//  *
+//  * @param {number} width  width of canvas in pixels
+//  * @param {number} height height of canvas in pixels
+//  */
+
+// /**
+//  * Clear the complete canvas
+//  */
+// Screen.prototype.clear = function() {
+//   this.ctx.clearRect(0, 0, this.width, this.height);
+// };
+
+// Screen.prototype.drawBullet = function(bullet) {
+//   // set the current fillstyle and draw bullet
+//   this.ctx.fillStyle = bullet.color;
+//   this.ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+// };
+
+// function Sprite(img, x, y, w, h) {
+//   this.img = img;
+//   this.x = x;
+//   this.y = y;
+//   this.w = w;
+//   this.h = h;
+// }
