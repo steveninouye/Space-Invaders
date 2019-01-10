@@ -7,9 +7,9 @@ function Bullet(x, y, velocityY, w, h, color) {
   this.color = color;
 }
 
-Bullet.prototype.update = function(){
+Bullet.prototype.update = function() {
   this.y += this.velocityY;
-}
+};
 
 function Screen(width, height) {
   this.canvas = document.createElement('canvas');
@@ -25,6 +25,11 @@ Screen.prototype.clearRect = function() {
 
 Screen.prototype.drawSprite = function(sp, x, y) {
   this.ctx.drawImage(sp.img, sp.x, sp.y, sp.w, sp.h, x, y, sp.w, sp.h);
+};
+
+Screen.prototype.drawBullet = function(bullet) {
+  this.ctx.fillStyle = bullet.color;
+  this.ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
 };
 
 function Sprite(img, x, y, w, h) {
