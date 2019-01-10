@@ -74,7 +74,7 @@ let display,
   cities;
 
 function main() {
-  screen = new Screen(504, 600);
+  screen = new Screen(502, 600);
   input = new InputHandeler();
   var img = new Image();
   img.addEventListener('load', function() {
@@ -95,7 +95,7 @@ function main() {
 function init() {
   frames = 0;
   spFrame = 0;
-  lvFrame = 60;
+  lvFrame = 40;
   dir = 1;
 
   aliens = [];
@@ -128,10 +128,25 @@ function update() {
   frames++;
   if (frames % lvFrame === 0) {
     spFrame = (spFrame + 1) % 2;
+
+    let _max = 0
+    let _min = screen.width;
+
     let len = aliens.length;
     for (let i = 0; i < len; i++) {
       let a = aliens[i];
       a.x += 30 * dir;
+
+      _max = Math.max(_max, a.x + a.w);
+      _min = Math.min(_min, a.x);
+    }
+    if (_max > screen.width || _min < 0){
+      dir *= -1;
+      len = aliens.length;
+      for(let i = 0; i < len; i++){
+        aliens[i].x += 30 * dir;
+        aliens[i].y += 30; 
+      }
     }
   }
 }
