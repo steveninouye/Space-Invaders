@@ -1,6 +1,6 @@
-![Space Invaders Logo](img/space_invaders_logo.jpg)
-# Space Invaders
+![Space Invaders Logo](public/img/space_invaders_logo.jpg)
 
+# Space Invaders
 
 Space Invaders is inspired by the 1978 game made by Tomohiro Nishikado ([Space Invaders](https://en.wikipedia.org/wiki/Space_Invaders)). The User's ship will be located at the bottom of the screen and be able to move horizontally and shoot at enemies that appear from above. Each time a player shoots down an enemy ship the user will receive points and the game ends when the player is either touched by an enemy ship.
 
@@ -22,6 +22,9 @@ Space Invaders is inspired by the 1978 game made by Tomohiro Nishikado ([Space I
   - Will be used to handle game logic
 - HTML & CSS
   - Used for templating and styling
+- Express JS
+  - Node framework that listens and responds to requests
+  - Will be used as my server to send files to the user
 
 ## Implementation Timeline
 
@@ -62,4 +65,4 @@ Space Invaders is inspired by the 1978 game made by Tomohiro Nishikado ([Space I
 
 - [ ] Style application to be portfolio ready
 
-![Game Play](img/game_play.png)
+![Game Play](public/img/game_play.png)
