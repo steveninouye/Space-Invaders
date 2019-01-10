@@ -12,7 +12,6 @@ Space Invaders is inspired by the 1978 game made by Tomohiro Nishikado ([Space I
 - Enemies move faster toward the player at each level
 - Player can earn power ups (Bonus)
 
-![Game Play](img/game_play.png)
 ## Architecture and Technologies
 - HTML Canvas
   - Allows for rendering 2D shapes onto the browser window
@@ -54,3 +53,5 @@ Space Invaders is inspired by the 1978 game made by Tomohiro Nishikado ([Space I
 
 ### Day 7
 - [ ] Style application to be portfolio ready
+
+![Game Play](img/game_play.png)
