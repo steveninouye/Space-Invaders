@@ -1,3 +1,14 @@
+function Bullet(x, y, velocityY, w, h, color) {
+  this.x = x;
+  this.y = y;
+  this.velocityY = velocityY;
+  this.width = w;
+  this.height = h;
+  this.color = color;
+}
+
+
+
 function Screen(width, height) {
   this.canvas = document.createElement('canvas');
   this.canvas.width = this.width = width;
@@ -74,7 +85,7 @@ let display,
   cities;
 
 function main() {
-  screen = new Screen(502, 600);
+  screen = new Screen(504, 600);
   input = new InputHandeler();
   var img = new Image();
   img.addEventListener('load', function() {
@@ -103,6 +114,8 @@ function init() {
     x: (screen.width - taSprite.w) / 2,
     y: screen.height - (30, +taSprite.h)
   };
+
+  bullets = [];
 
   aliens = [];
   let rows = [1, 0, 0, 2, 2];
@@ -156,7 +169,7 @@ function update() {
       _max = Math.max(_max, a.x + a.w);
       _min = Math.min(_min, a.x);
     }
-    if (_max > screen.width || _min < 30) {
+    if (_max > screen.width - 30 || _min < 30) {
       dir *= -1;
       len = aliens.length;
       for (let i = 0; i < len; i++) {
