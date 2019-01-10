@@ -140,7 +140,7 @@ function update() {
       _max = Math.max(_max, a.x + a.w);
       _min = Math.min(_min, a.x);
     }
-    if (_max > screen.width || _min < 0){
+    if (_max > screen.width || _min < 30){
       dir *= -1;
       len = aliens.length;
       for(let i = 0; i < len; i++){
