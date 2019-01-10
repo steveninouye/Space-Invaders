@@ -27,25 +27,27 @@ Space Invaders is inspired by the 1978 game made by Tomohiro Nishikado ([Space I
 - [ ] Learn HTML Canvas
 
 ### Day 2
-- [ ]  
-- [ ]  
+- [ ] Find and save assets for ship
+- [ ] Create any additonal assets necessary for game
 
 ### Day 3
-- [ ]  
-- [ ]  
+- [ ] Render player ship
+- [ ] Allow player ship to move horizontally on the screen
+- [ ] Configure ship to be able to fire at enemies
 
 ### Day 4
-- [ ]  
-- [ ]  
+- [ ] Render Enemies on the screen
+- [ ] Allow Enemies to move about the screen
+- [ ] Allow Enemies to shoot at player
 
 ### Day 5
-- [ ]  
-- [ ]  
+- [ ] Add logic to compute enemy being hit by shot
+- [ ] Add logic to handle player being destroyed by enemy
+- [ ] Add logic to keep score
 
 ### Day 6
-- [ ]  
-- [ ]  
+- [ ] Add logic for multiple levels
+- [ ] Style welcome screen
 
 ### Day 7
-- [ ]  
-- [ ]  
+- [ ] Style application to be portfolio ready
