@@ -139,6 +139,8 @@ function update() {
     tank.x += 4;
   }
 
+  tank.x = Math.max(Math.min(tank.x, screen.width - (30 + taSprite.w)), 30);
+
   frames++;
   if (frames % lvFrame === 0) {
     spFrame = (spFrame + 1) % 2;
