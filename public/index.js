@@ -192,8 +192,8 @@ function update() {
       if (AABBIntersect(a.x, a.y, a.w, a.h, b.x, b.y, b.w, b.h)) {
         a = b;
       }
-      bullets.push(new Bullet(a.x + a.w * 0.5, a.y + a.h, 4, 2, 4, '#FFF'));
     }
+    bullets.push(new Bullet(a.x + a.w * 0.5, a.y + a.h, 4, 2, 4, '#FFF'));
   }
 
   frames++;
