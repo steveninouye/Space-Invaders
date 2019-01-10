@@ -169,7 +169,14 @@ function update() {
   }
 
   for (let i = 0; i < bullets.length; i++) {
-    bullets[i].update();
+    let b = bullets[i];
+    b.update();
+
+    if (b.y + b.height < 10 || b.y > screen.height) {
+      bullets.splice(i, 1);
+      i--;
+      continue;
+    }
   }
 
   frames++;
