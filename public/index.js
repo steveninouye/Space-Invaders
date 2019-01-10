@@ -6,9 +6,9 @@ function Screen(width, height) {
   document.body.appendChild(this.canvas);
 }
 
-Screen.prototype.clear = function(){
-  this.ctx.clearRect(0,0, this.width, this.height);
-}
+Screen.prototype.clearRect = function() {
+  this.ctx.clearRect(0, 0, this.width, this.height);
+};
 
 Screen.prototype.drawSprite = function(sp, x, y) {
   this.ctx.drawImage(sp.img, sp.x, sp.y, sp.w, sp.h, x, y, sp.w, sp.h);
@@ -137,7 +137,7 @@ function update() {
 }
 
 function render() {
-  
+  screen.clearRect();
   let len = aliens.length;
   for (let i = 0; i < len; i++) {
     let a = aliens[i];
@@ -146,28 +146,6 @@ function render() {
 }
 
 main();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ///////////////////
 
