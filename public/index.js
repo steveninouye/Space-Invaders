@@ -127,6 +127,49 @@ function init() {
   };
 
   bullets = [];
+  cities = {
+    canvas: null,
+    ctx: null,
+    y: tank.y - (30 + ciSprite.h),
+    h: ciSprite.h,
+    init: function() {
+      this.canvas = document.createElement('canvas');
+      this.canvas.width = screen.width;
+      this.canvas.height = this.h;
+      this.ctx = this.canvas.getContext('2d');
+
+      for (let i = 0; i < 4; i++) {
+        this.ctx.drawImage(
+          ciSprite.img,
+          ciSprite.x,
+          ciSprite.y,
+          ciSprite.w,
+          ciSprite.h,
+          68 + 111 * i,
+          0,
+          ciSprite.w,
+          ciSprite.h
+        );
+      }
+    },
+    generateDamage: function(x, y) {
+      x = Math.floor(x / 2) * 2;
+      y = Math.floor(y / 2) * 2;
+      this.ctx.clearRect(x - 2, y - 2, 4, 4);
+      this.ctx.clearRect(x + 2, y - 4, 2, 4);
+      this.ctx.clearRect(x + 4, y, 2, 2);
+      this.ctx.clearRect(x + 2, y + 2, 2, 2);
+      this.ctx.clearRect(x - 4, y + 2, 2, 2);
+      this.ctx.clearRect(x - 6, y, 2, 2);
+      this.ctx.clearRect(x - 4, y - 4, 2, 2);
+      this.ctx.clearRect(x - 2, y - 6, 2, 2);
+    },
+    hits: function(x, y) {
+      y -= this.y;
+    }
+  };
+
+  cities.init();
 
   aliens = [];
   let rows = [1, 0, 0, 2, 2];
@@ -242,6 +285,8 @@ function render() {
     screen.drawBullet(bullets[i]);
   }
   screen.ctx.restore();
+
+  screen.ctx.drawImage(cities.canvas, 0, cities.y);
 
   screen.drawSprite(tank.sprite, tank.x, tank.y);
 }
