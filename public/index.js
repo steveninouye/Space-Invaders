@@ -151,15 +151,26 @@ function run() {
 }
 
 function update() {
+  // Left Key
   if (input.isDown(37)) {
     tank.x -= 4;
   }
 
+  // Right Key
   if (input.isDown(39)) {
     tank.x += 4;
   }
 
   tank.x = Math.max(Math.min(tank.x, screen.width - (30 + taSprite.w)), 30);
+
+  // Space Key
+  if (input.isPressed(32)) {
+    bullets.push(new Bullet(tank.x + 10, tank.y, -8, 2, 6, '#fff'));
+  }
+
+  for (let i = 0; i < bullets.length; i++) {
+    bullets[i].update();
+  }
 
   frames++;
   if (frames % lvFrame === 0) {
@@ -189,11 +200,17 @@ function update() {
 
 function render() {
   screen.clearRect();
-  let len = aliens.length;
-  for (let i = 0; i < len; i++) {
+  for (let i = 0; i < aliens.length; i++) {
     let a = aliens[i];
     screen.drawSprite(a.sprite[spFrame], a.x, a.y);
   }
+
+  screen.ctx.save();
+  for (let i = 0; i < bullets.length; i++) {
+    screen.drawBullet(bullets[i]);
+  }
+  screen.ctx.restore();
+
   screen.drawSprite(tank.sprite, tank.x, tank.y);
 }
 
