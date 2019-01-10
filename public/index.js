@@ -181,6 +181,14 @@ function update() {
       i--;
       continue;
     }
+
+    for (let j = 0; j < aliens.length; j++) {
+      let a = aliens[j];
+      if (AABBIntersect(b.x, b.y, b.width, b.height, a.x, a.y, a.w, a.h)) {
+        aliens.splice(j, 1);
+        bullets.splice(i, 1);
+      }
+    }
   }
 
   if (Math.random() < 0.03 && aliens.length > 0) {
@@ -189,7 +197,7 @@ function update() {
     for (let i = 0; i < aliens.length; i++) {
       let b = aliens[i];
 
-      if (AABBIntersect(a.x, a.y, a.w, a.h, b.x, b.y, b.w, b.h)) {
+      if (AABBIntersect(a.x, a.y, a.w, 100, b.x, b.y, b.w, b.h)) {
         a = b;
       }
     }
