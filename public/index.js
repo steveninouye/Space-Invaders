@@ -1,6 +1,17 @@
-function AABBIntersect(ax, ay, aw, ah, bx, by, bw, bh) {
-  return ax < bx + bw && bx < ax + aw && ay < by + bh && by < ay + ah;
-}
+const AABBIntersect = (
+  aXCoord,
+  aYCoord,
+  aWidth,
+  aHeight,
+  bXCoord,
+  bYCoord,
+  bWidth,
+  bHeight
+) =>
+  aXCoord < bXCoord + bWidth &&
+  bXCoord < aXCoord + aWidth &&
+  aYCoord < bYCoord + bHeight &&
+  bYCoord < aYCoord + aHeight;
 
 class Bullet {
   constructor(xCoord, yCoord, velocityY, width, height, color) {
@@ -28,7 +39,6 @@ class Screen {
   }
 
   drawSprite(sprite, initX, initY) {
-    // debugger;
     this.ctx.drawImage(
       sprite.image,
       sprite.xCoord,
