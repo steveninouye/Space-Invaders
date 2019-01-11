@@ -9,6 +9,7 @@ class Screen {
   }
 
   drawSprite(sprite, initX, initY) {
+    // debugger;
     this.ctx.drawImage(
       sprite.image,
       sprite.xCoord,
@@ -40,3 +41,5 @@ class Screen {
     document.body.appendChild(this.canvas);
   }
 }
+
+export default Screen;

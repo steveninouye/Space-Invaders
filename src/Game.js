@@ -1,16 +1,26 @@
+import Bullet from './Bullet';
+import InputHandeler from './InputHandler';
+import Screen from './Screen';
+import Sprite from './Sprite';
+
 class Game {
-  constructor() {}
+  constructor() {
+    this.screen = new Screen(540, 600);
+    this.frames = 0;
+    this.spFrame = 0;
+    this.lvFrame = 40;
+    this.dir = 1;
+  }
 
   main() {
-    this.screen = new Screen(504, 600);
     this.screen.render();
     this.input = new InputHandeler();
     let image = new Image();
     image.addEventListener('load', () => {
-      alSprite = [
-        [new Sprite(this, 0, 0, 22, 16), new Sprite(image, 0, 16, 22, 16)],
-        [new Sprite(this, 22, 0, 16, 16), new Sprite(image, 22, 16, 16, 16)],
-        [new Sprite(this, 38, 0, 24, 16), new Sprite(image, 38, 16, 24, 16)]
+      this.alSprite = [
+        [new Sprite(image, 0, 0, 22, 16), new Sprite(image, 0, 16, 22, 16)], // Crab
+        [new Sprite(image, 22, 0, 16, 16), new Sprite(image, 22, 16, 16, 16)], // Lobster
+        [new Sprite(image, 38, 0, 24, 16), new Sprite(image, 38, 16, 24, 16)] // Alien
       ];
       this.taSprite = new Sprite(image, 62, 0, 22, 16);
       this.ciSprite = new Sprite(image, 84, 8, 36, 24);
@@ -21,11 +31,6 @@ class Game {
   }
 
   init() {
-    this.frames = 0;
-    this.spFrame = 0;
-    this.lvFrame = 40;
-    this.dir = 1;
-
     this.tank = {
       sprite: this.taSprite,
       xCoord: (this.screen.width - this.taSprite.width) / 2,
@@ -38,27 +43,26 @@ class Game {
       ctx: null,
       yCoord: this.tank.yCoord - (30 + this.ciSprite.height),
       height: this.ciSprite.height,
-      init: function() {
+      init: function(game) {
         this.canvas = document.createElement('canvas');
-        this.canvas.width = this.screen.width;
+        this.canvas.width = game.screen.width;
         this.canvas.height = this.height;
         this.ctx = this.canvas.getContext('2d');
-
         for (let i = 0; i < 4; i++) {
           this.ctx.drawImage(
-            this.ciSprite.image,
-            this.ciSprite.xCoord,
-            this.ciSprite.yCoord,
-            this.ciSprite.width,
-            this.ciSprite.height,
+            game.ciSprite.image,
+            game.ciSprite.xCoord,
+            game.ciSprite.yCoord,
+            game.ciSprite.width,
+            game.ciSprite.height,
             68 + 111 * i,
             0,
-            this.ciSprite.width,
-            this.ciSprite.height
+            game.ciSprite.width,
+            game.ciSprite.height
           );
         }
       },
-      generateDamage: (xCoord, yCoord) => {
+      generateDamage: function(xCoord, yCoord) {
         xCoord = Math.floor(xCoord / 2) * 2;
         yCoord = Math.floor(yCoord / 2) * 2;
         this.ctx.clearRect(xCoord - 2, yCoord - 2, 4, 4);
@@ -70,7 +74,7 @@ class Game {
         this.ctx.clearRect(xCoord - 4, yCoord - 4, 2, 2);
         this.ctx.clearRect(xCoord - 2, yCoord - 6, 2, 2);
       },
-      hits: (xCoord, yCoord) => {
+      hits: function(xCoord, yCoord) {
         yCoord -= this.yCoord;
         let data = this.ctx.getImageData(xCoord, yCoord, 1, 1);
         if (data.data[3] !== 0) {
@@ -81,7 +85,7 @@ class Game {
       }
     };
 
-    this.cities.init();
+    this.cities.init(this);
 
     this.aliens = [];
     let rows = [1, 0, 0, 2, 2];
@@ -135,7 +139,7 @@ class Game {
     }
 
     for (let i = 0; i < this.bullets.length; i++) {
-      let bullet = bullets[i];
+      let bullet = this.bullets[i];
       bullet.update();
 
       if (bullet.yCoord + bullet.height < 10 || bullet.yCoord > screen.height) {
@@ -144,8 +148,9 @@ class Game {
       }
 
       let h2 = bullet.height * 0.5;
+      // debugger;
       if (
-        this.cities.yCoord < this.bullet.yCoord + h2 &&
+        this.cities.yCoord < bullet.yCoord + h2 &&
         bullet.yCoord + h2 < this.cities.yCoord + this.cities.height
       ) {
         if (this.cities.hits(bullet.xCoord, bullet.yCoord + h2)) {
@@ -238,7 +243,12 @@ class Game {
     this.screen.clearRect();
     for (let i = 0; i < this.aliens.length; i++) {
       let alien = this.aliens[i];
-      this.screen.drawSprite(alien.sprite[spFrame], alien.xCoord, alien.yCoord);
+      // debugger;
+      this.screen.drawSprite(
+        alien.sprite[this.spFrame],
+        alien.xCoord,
+        alien.yCoord
+      );
     }
 
     this.screen.ctx.save();
@@ -246,7 +256,6 @@ class Game {
       this.screen.drawBullet(this.bullets[i]);
     }
     this.screen.ctx.restore();
-
     this.screen.ctx.drawImage(this.cities.canvas, 0, this.cities.yCoord);
 
     this.screen.drawSprite(
@@ -256,3 +265,21 @@ class Game {
     );
   }
 }
+
+const AABBIntersect = (
+  aXCoord,
+  aYCoord,
+  aWidth,
+  aHeight,
+  bXCoord,
+  bYCoord,
+  bWidth,
+  bHeight
+) =>
+  aXCoord < bXCoord + bWidth &&
+  bXCoord < aXCoord + aWidth &&
+  aYCoord < bYCoord + bHeight &&
+  bYCoord < aYCoord + aHeight;
+
+let game = new Game();
+game.main();

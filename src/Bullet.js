@@ -12,3 +12,5 @@ class Bullet {
     this.yCoord += this.velocityY;
   }
 }
+
+export default Bullet;

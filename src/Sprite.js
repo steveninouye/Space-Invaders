@@ -7,3 +7,5 @@ class Sprite {
     this.height = height;
   }
 }
+
+export default Sprite;

@@ -24,3 +24,5 @@ class InputHandeler {
     return false;
   }
 }
+
+export default InputHandeler;
