@@ -2,6 +2,7 @@ import Bullet from './Bullet';
 import InputHandeler from './InputHandler';
 import Screen from './Screen';
 import Sprite from './Sprite';
+import { isIntersect } from './util/intersect';
 
 class Game {
   constructor() {
@@ -148,7 +149,6 @@ class Game {
       }
 
       let h2 = bullet.height * 0.5;
-      // debugger;
       if (
         this.cities.yCoord < bullet.yCoord + h2 &&
         bullet.yCoord + h2 < this.cities.yCoord + this.cities.height
@@ -162,7 +162,7 @@ class Game {
       for (let j = 0; j < this.aliens.length; j++) {
         let alien = this.aliens[j];
         if (
-          AABBIntersect(
+          isIntersect(
             bullet.xCoord,
             bullet.yCoord,
             bullet.width,
@@ -188,7 +188,7 @@ class Game {
         let alien2 = this.aliens[i];
 
         if (
-          AABBIntersect(
+          isIntersect(
             alien1.xCoord,
             alien1.yCoord,
             alien1.width,
@@ -265,21 +265,6 @@ class Game {
     );
   }
 }
-
-const AABBIntersect = (
-  aXCoord,
-  aYCoord,
-  aWidth,
-  aHeight,
-  bXCoord,
-  bYCoord,
-  bWidth,
-  bHeight
-) =>
-  aXCoord < bXCoord + bWidth &&
-  bXCoord < aXCoord + aWidth &&
-  aYCoord < bYCoord + bHeight &&
-  bYCoord < aYCoord + aHeight;
 
 let game = new Game();
 game.main();
