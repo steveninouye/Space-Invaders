@@ -255,7 +255,7 @@ function update() {
 
   // Space Key
   if (input.isPressed(32)) {
-    bullets.push(new Bullet(tank.xCoord + 10, tank.yCoord, -8, 2, 6, '#fff'));
+    bullets.push(new Bullet(tank.xCoord + 10, tank.yCoord, -8, 2, 6, '#FFF'));
   }
 
   for (let i = 0; i < bullets.length; i++) {
@@ -281,17 +281,17 @@ function update() {
     }
 
     for (let j = 0; j < aliens.length; j++) {
-      let a = aliens[j];
+      let alien = aliens[j];
       if (
         AABBIntersect(
           bullet.xCoord,
           bullet.yCoord,
           bullet.width,
           bullet.height,
-          a.xCoord,
-          a.yCoord,
-          a.width,
-          a.height
+          alien.xCoord,
+          alien.yCoord,
+          alien.width,
+          alien.height
         )
       ) {
         aliens.splice(j, 1);
