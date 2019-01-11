@@ -301,28 +301,35 @@ function update() {
   }
 
   if (Math.random() < 0.03 && aliens.length > 0) {
-    let a = aliens[Math.round(Math.random() * (aliens.length - 1))];
+    let alien1 = aliens[Math.round(Math.random() * (aliens.length - 1))];
 
     for (let i = 0; i < aliens.length; i++) {
-      let b = aliens[i];
+      let alien2 = aliens[i];
 
       if (
         AABBIntersect(
-          a.xCoord,
-          a.yCoord,
-          a.width,
+          alien1.xCoord,
+          alien1.yCoord,
+          alien1.width,
           100,
-          b.xCoord,
-          b.yCoord,
-          b.width,
-          b.height
+          alien2.xCoord,
+          alien2.yCoord,
+          alien2.width,
+          alien2.height
         )
       ) {
-        a = b;
+        alien1 = alien2;
       }
     }
     bullets.push(
-      new Bullet(a.xCoord + a.width * 0.5, a.yCoord + a.height, 4, 2, 4, '#FFF')
+      new Bullet(
+        alien1.xCoord + alien1.width * 0.5,
+        alien1.yCoord + alien1.height,
+        4,
+        2,
+        4,
+        '#FFF'
+      )
     );
   }
 
