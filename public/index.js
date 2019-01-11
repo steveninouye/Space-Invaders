@@ -150,7 +150,7 @@ function init() {
   tank = {
     sprite: taSprite,
     xCoord: (screen.width - taSprite.width) / 2,
-    yCoord: screen.height - (30, +taSprite.height)
+    yCoord: screen.height - (30, taSprite.height)
   };
 
   bullets = [];
