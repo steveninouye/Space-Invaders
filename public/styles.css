@@ -1,6 +1,14 @@
-canvas {
+body {
   background-image: url('img/background.jpg');
   background-size: cover;
+}
+
+body > div#placeholder {
+  width: 100vw;
+  height: 100vh;
+}
+
+canvas {
   display: block;
   position: absolute;
   margin: auto;

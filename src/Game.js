@@ -1,5 +1,5 @@
 import Bullet from './Bullet';
-import InputHandeler from './InputHandler';
+import InputHandler from './InputHandler';
 import Screen from './Screen';
 import Sprite from './Sprite';
 import { isIntersect } from './util/intersect';
@@ -10,12 +10,12 @@ class Game {
     this.frames = 0;
     this.spFrame = 0;
     this.gameSpeed = 10;
-    this.dir = 1; // 1 is right -1 is left
+    this.dir = 1;
   }
 
   main() {
     this.screen.render();
-    this.input = new InputHandeler();
+    this.input = new InputHandler();
     let image = new Image();
     image.addEventListener('load', () => {
       this.alSprite = [
@@ -143,6 +143,21 @@ class Game {
       let bullet = this.bullets[i];
       bullet.update();
 
+      if (
+        isIntersect(
+          bullet.xCoord,
+          bullet.yCoord,
+          bullet.width,
+          bullet.height,
+          this.tank.xCoord,
+          this.tank.yCoord,
+          this.tank.sprite.width,
+          this.tank.sprite.height
+        )
+      ) {
+        console.log('HIT!!!!');
+      }
+
       if (bullet.yCoord + bullet.height < 10 || bullet.yCoord > screen.height) {
         this.bullets.splice(i, 1);
         continue;
@@ -207,7 +222,7 @@ class Game {
           alien1.xCoord + alien1.width * 0.5,
           alien1.yCoord + alien1.height,
           10,
-          3,
+          4,
           5,
           '#F00'
         )

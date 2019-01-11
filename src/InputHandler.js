@@ -1,11 +1,13 @@
-class InputHandeler {
+class InputHandler {
   constructor() {
     this.down = {};
     this.pressed = {};
     document.addEventListener('keydown', (e) => {
+      e.preventDefault();
       this.down[e.keyCode] = true;
     });
     document.addEventListener('keyup', (e) => {
+      e.preventDefault();
       delete this.down[e.keyCode];
       delete this.pressed[e.keyCode];
     });
@@ -25,4 +27,4 @@ class InputHandeler {
   }
 }
 
-export default InputHandeler;
+export default InputHandler;
