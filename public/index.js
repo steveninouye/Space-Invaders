@@ -71,50 +71,32 @@ class Sprite {
   }
 }
 
-// function Sprite(img, x, y, w, h) {
-//   this.img = img;
-//   this.x = x;
-//   this.y = y;
-//   this.w = w;
-//   this.h = h;
-// }
-
-function InputHandeler() {
-  this.down = {};
-  this.pressed = {};
-  var _this = this;
-  document.addEventListener('keydown', function(evt) {
-    _this.down[evt.keyCode] = true;
-  });
-  document.addEventListener('keyup', function(evt) {
-    delete _this.down[evt.keyCode];
-    delete _this.pressed[evt.keyCode];
-  });
-}
-
-InputHandeler.prototype.isDown = function(code) {
-  return this.down[code];
-};
-
-InputHandeler.prototype.isPressed = function(code) {
-  if (this.pressed[code]) {
-    return false;
-  } else if (this.down[code]) {
-    return (this.pressed[code] = true);
+class InputHandeler {
+  constructor() {
+    this.down = {};
+    this.pressed = {};
+    document.addEventListener('keydown', (e) => {
+      this.down[e.keyCode] = true;
+    });
+    document.addEventListener('keyup', (e) => {
+      delete this.down[e.keyCode];
+      delete this.pressed[e.keyCode];
+    });
   }
-  return false;
-};
 
-// InputHandler.prototype.isPressed = function(code) {
-//   if (this.pressed[code]) {
-//     return false;
-//   } else if (this.down[code]) {
-//     return (this.pressed[code] = true);
-//   }
-//   return false;
-// };
+  isDown(code) {
+    return this.down[code];
+  }
 
-// ///////////////////////////
+  isPressed(code) {
+    if (this.pressed[code]) {
+      return false;
+    } else if (this.down[code]) {
+      return (this.pressed[code] = true);
+    }
+    return false;
+  }
+}
 
 let display,
   input,
