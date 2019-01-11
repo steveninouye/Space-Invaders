@@ -335,11 +335,11 @@ function update() {
 
     let len = aliens.length;
     for (let i = 0; i < len; i++) {
-      let a = aliens[i];
-      a.xCoord += 30 * dir;
+      let alien = aliens[i];
+      alien.xCoord += 30 * dir;
 
-      _max = Math.max(_max, a.xCoord + a.width);
-      _min = Math.min(_min, a.xCoord);
+      _max = Math.max(_max, alien.xCoord + alien.width);
+      _min = Math.min(_min, alien.xCoord);
     }
     if (_max > screen.width - 30 || _min < 30) {
       dir *= -1;
@@ -355,8 +355,8 @@ function update() {
 function render() {
   screen.clearRect();
   for (let i = 0; i < aliens.length; i++) {
-    let a = aliens[i];
-    screen.drawSprite(a.sprite[spFrame], a.xCoord, a.yCoord);
+    let alien = aliens[i];
+    screen.drawSprite(alien.sprite[spFrame], alien.xCoord, alien.yCoord);
   }
 
   screen.ctx.save();
