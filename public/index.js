@@ -2,18 +2,20 @@ function AABBIntersect(ax, ay, aw, ah, bx, by, bw, bh) {
   return ax < bx + bw && bx < ax + aw && ay < by + bh && by < ay + ah;
 }
 
-function Bullet(x, y, velocityY, w, h, color) {
-  this.x = x;
-  this.y = y;
-  this.velocityY = velocityY;
-  this.width = w;
-  this.height = h;
-  this.color = color;
-}
+class Bullet {
+  constructor(xCoord, yCoord, velocityY, width, height, color) {
+    this.xCoord = xCoord;
+    this.yCoord = yCoord;
+    this.velocityY = velocityY;
+    this.width = width;
+    this.height = height;
+    this.color = color;
+  }
 
-Bullet.prototype.update = function() {
-  this.y += this.velocityY;
-};
+  update() {
+    this.yCoord += this.velocityY;
+  }
+}
 
 function Screen(width, height) {
   this.canvas = document.createElement('canvas');
@@ -33,7 +35,7 @@ Screen.prototype.drawSprite = function(sp, x, y) {
 
 Screen.prototype.drawBullet = function(bullet) {
   this.ctx.fillStyle = bullet.color;
-  this.ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+  this.ctx.fillRect(bullet.xCoord, bullet.yCoord, bullet.width, bullet.height);
 };
 
 function Sprite(img, x, y, w, h) {
@@ -232,8 +234,8 @@ function update() {
     }
 
     let h2 = b.height * 0.5;
-    if (cities.y < b.y + h2 && b.y + h2 < cities.y + cities.h) {
-      if (cities.hits(b.x, b.y + h2)) {
+    if (cities.y < b.yCoord + h2 && b.yCoord + h2 < cities.y + cities.h) {
+      if (cities.hits(b.xCoord, b.yCoord + h2)) {
         bullets.splice(i, 1);
         // i--;
         continue;
@@ -242,7 +244,9 @@ function update() {
 
     for (let j = 0; j < aliens.length; j++) {
       let a = aliens[j];
-      if (AABBIntersect(b.x, b.y, b.width, b.height, a.x, a.y, a.w, a.h)) {
+      if (
+        AABBIntersect(b.xCoord, b.yCoord, b.width, b.height, a.x, a.y, a.w, a.h)
+      ) {
         aliens.splice(j, 1);
         bullets.splice(i, 1);
       }
@@ -307,58 +311,3 @@ function render() {
 }
 
 main();
-
-///////////////////
-
-/**
- * Check if to axis aligned bounding boxes intersects
- *
- * @return {bool}  the check result
- */
-// function AABBIntersect(ax, ay, aw, ah, bx, by, bw, bh) {
-//   return ax < bx + bw && bx < ax + aw && ay < by + bh && by < ay + ah;
-// }
-
-// function Bullet(x, y, vely, w, h, color) {
-//   this.x = x;
-//   this.y = y;
-//   this.vely = vely;
-//   this.width = w;
-//   this.height = h;
-//   this.color = color;
-// }
-
-// /**
-//  * Update bullet position
-//  */
-// Bullet.prototype.update = function() {
-//   this.y += this.vely;
-// };
-
-// /**
-//  * Abstracted canvas class usefull in games
-//  *
-//  * @param {number} width  width of canvas in pixels
-//  * @param {number} height height of canvas in pixels
-//  */
-
-// /**
-//  * Clear the complete canvas
-//  */
-// Screen.prototype.clear = function() {
-//   this.ctx.clearRect(0, 0, this.width, this.height);
-// };
-
-// Screen.prototype.drawBullet = function(bullet) {
-//   // set the current fillstyle and draw bullet
-//   this.ctx.fillStyle = bullet.color;
-//   this.ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
-// };
-
-// function Sprite(img, x, y, w, h) {
-//   this.img = img;
-//   this.x = x;
-//   this.y = y;
-//   this.w = w;
-//   this.h = h;
-// }
