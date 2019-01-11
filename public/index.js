@@ -259,21 +259,21 @@ function update() {
   }
 
   for (let i = 0; i < bullets.length; i++) {
-    let b = bullets[i];
-    b.update();
+    let bullet = bullets[i];
+    bullet.update();
 
-    if (b.yCoord + b.height < 10 || b.yCoord > screen.height) {
+    if (bullet.yCoord + bullet.height < 10 || bullet.yCoord > screen.height) {
       bullets.splice(i, 1);
       // i--;
       continue;
     }
 
-    let h2 = b.height * 0.5;
+    let h2 = bullet.height * 0.5;
     if (
-      cities.yCoord < b.yCoord + h2 &&
-      b.yCoord + h2 < cities.yCoord + cities.height
+      cities.yCoord < bullet.yCoord + h2 &&
+      bullet.yCoord + h2 < cities.yCoord + cities.height
     ) {
-      if (cities.hits(b.xCoord, b.yCoord + h2)) {
+      if (cities.hits(bullet.xCoord, bullet.yCoord + h2)) {
         bullets.splice(i, 1);
         // i--;
         continue;
@@ -284,10 +284,10 @@ function update() {
       let a = aliens[j];
       if (
         AABBIntersect(
-          b.xCoord,
-          b.yCoord,
-          b.width,
-          b.height,
+          bullet.xCoord,
+          bullet.yCoord,
+          bullet.width,
+          bullet.height,
           a.xCoord,
           a.yCoord,
           a.width,
