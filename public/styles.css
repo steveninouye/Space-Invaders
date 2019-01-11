@@ -1,5 +1,6 @@
 canvas {
-  background-color: black;
+  background-image: url('img/background.jpg');
+  background-size: cover;
   display: block;
   position: absolute;
   margin: auto;

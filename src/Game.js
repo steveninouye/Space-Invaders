@@ -6,11 +6,11 @@ import { isIntersect } from './util/intersect';
 
 class Game {
   constructor() {
-    this.screen = new Screen(540, 600);
+    this.screen = new Screen(700, 800);
     this.frames = 0;
     this.spFrame = 0;
-    this.lvFrame = 40;
-    this.dir = 1;
+    this.gameSpeed = 10;
+    this.dir = 1; // 1 is right -1 is left
   }
 
   main() {
@@ -35,7 +35,7 @@ class Game {
     this.tank = {
       sprite: this.taSprite,
       xCoord: (this.screen.width - this.taSprite.width) / 2,
-      yCoord: this.screen.height - (30, this.taSprite.height)
+      yCoord: this.screen.height - (25 + this.taSprite.height)
     };
 
     this.bullets = [];
@@ -56,7 +56,7 @@ class Game {
             game.ciSprite.yCoord,
             game.ciSprite.width,
             game.ciSprite.height,
-            68 + 111 * i,
+            68 + ((game.screen.width - 20) / 4) * i,
             0,
             game.ciSprite.width,
             game.ciSprite.height
@@ -116,12 +116,12 @@ class Game {
   update() {
     // Left Key
     if (this.input.isDown(37)) {
-      this.tank.xCoord -= 4;
+      this.tank.xCoord -= 3;
     }
 
     // Right Key
     if (this.input.isDown(39)) {
-      this.tank.xCoord += 4;
+      this.tank.xCoord += 3;
     }
 
     this.tank.xCoord = Math.max(
@@ -135,7 +135,7 @@ class Game {
     // Space Key
     if (this.input.isPressed(32)) {
       this.bullets.push(
-        new Bullet(this.tank.xCoord + 10, this.tank.yCoord, -8, 2, 6, '#FFF')
+        new Bullet(this.tank.xCoord + 10, this.tank.yCoord, -10, 2, 6, '#FFF')
       );
     }
 
@@ -206,16 +206,16 @@ class Game {
         new Bullet(
           alien1.xCoord + alien1.width * 0.5,
           alien1.yCoord + alien1.height,
-          4,
-          2,
-          4,
-          '#FFF'
+          10,
+          3,
+          5,
+          '#F00'
         )
       );
     }
 
     this.frames++;
-    if (this.frames % this.lvFrame === 0) {
+    if (this.frames % this.gameSpeed === 0) {
       this.spFrame = (this.spFrame + 1) % 2;
 
       let _max = 0;
@@ -223,7 +223,7 @@ class Game {
 
       for (let i = 0; i < this.aliens.length; i++) {
         let alien = this.aliens[i];
-        alien.xCoord += 30 * this.dir;
+        alien.xCoord += 20 * this.dir;
 
         _max = Math.max(_max, alien.xCoord + alien.width);
         _min = Math.min(_min, alien.xCoord);
@@ -232,7 +232,7 @@ class Game {
         this.dir *= -1;
 
         for (let i = 0; i < this.aliens.length; i++) {
-          this.aliens[i].xCoord += 30 * this.dir;
+          this.aliens[i].xCoord += 20 * this.dir;
           this.aliens[i].yCoord += 30;
         }
       }
@@ -243,7 +243,6 @@ class Game {
     this.screen.clearRect();
     for (let i = 0; i < this.aliens.length; i++) {
       let alien = this.aliens[i];
-      // debugger;
       this.screen.drawSprite(
         alien.sprite[this.spFrame],
         alien.xCoord,
