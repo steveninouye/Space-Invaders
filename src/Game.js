@@ -13,7 +13,7 @@ class Game {
     this.dir = 1;
   }
 
-  main() {
+  start() {
     this.screen.render();
     this.input = new InputHandler();
     let image = new Image();
@@ -89,9 +89,9 @@ class Game {
     this.cities.init(this);
 
     this.aliens = [];
-    let rows = [1, 0, 0, 2, 2];
+    let rows = [1, 1, 0, 0, 2, 2];
     for (let i = 0; i < rows.length; i++) {
-      for (let j = 0; j < 10; j++) {
+      for (let j = 0; j < 12; j++) {
         let a = rows[i];
         this.aliens.push({
           sprite: this.alSprite[a],
@@ -155,7 +155,7 @@ class Game {
           this.tank.sprite.height
         )
       ) {
-        console.log('HIT!!!!');
+        delete this.tank;
       }
 
       if (bullet.yCoord + bullet.height < 10 || bullet.yCoord > screen.height) {
@@ -281,4 +281,4 @@ class Game {
 }
 
 let game = new Game();
-game.main();
+game.start();

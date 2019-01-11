@@ -3,7 +3,9 @@ class InputHandler {
     this.down = {};
     this.pressed = {};
     document.addEventListener('keydown', (e) => {
-      e.preventDefault();
+      if(e.keyCode === 37 || e.keyCode === 39 || e.keyCode === 32){
+        e.preventDefault();
+      }
       this.down[e.keyCode] = true;
     });
     document.addEventListener('keyup', (e) => {
