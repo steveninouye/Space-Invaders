@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "dev": "concurrently -r -k \"webpack -w -d\" \"nodemon server.js\"",
+    "start": "webpack -p && node server.js"
   },
   "repository": {
     "type": "git",
